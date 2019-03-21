@@ -21,4 +21,18 @@ public class MyDeque<E> {
 
     return start + end; //double ended list
   }
+
+  public String toString() {
+    String output = "{";
+
+    for (int i = start; i < data.length; ++i)
+      output += data[i] + " ";
+
+    for (int i = end; i < start; ++i)
+      output += data[i] + " ";
+
+    output += "}";
+
+    return output;
+  }
 }
