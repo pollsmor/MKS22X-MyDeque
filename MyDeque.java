@@ -25,11 +25,11 @@ public class MyDeque<E> {
   public String toString() {
     String output = "{";
 
+    //Loop from start to end of the list (unless null is reached)
     for (int i = start; i < data.length && data[i] != null; ++i)
       output += data[i] + " ";
 
-    output += "} / {";
-
+    //Would never get run if start > end
     for (int i = end; i < start && data[i] != null; ++i)
       output += data[i] + " ";
 
