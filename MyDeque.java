@@ -37,4 +37,12 @@ public class MyDeque<E> {
 
     return output;
   }
+
+  public E getFirst() {
+    return data[start];
+  }
+
+  public E getLast() {
+    return data[end];
+  }
 }
