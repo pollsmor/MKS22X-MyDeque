@@ -25,10 +25,12 @@ public class MyDeque<E> {
   public String toString() {
     String output = "{";
 
-    for (int i = start; i < data.length; ++i)
+    for (int i = start; i < data.length && data[i] != null; ++i)
       output += data[i] + " ";
 
-    for (int i = end; i < start; ++i)
+    output += "} / {";
+
+    for (int i = end; i < start && data[i] != null; ++i)
       output += data[i] + " ";
 
     output += "}";
