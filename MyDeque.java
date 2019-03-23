@@ -45,4 +45,23 @@ public class MyDeque<E> {
   public E getLast() {
     return data[end];
   }
+
+  @SuppressWarnings("unchecked")
+  private E[] resize(E[] data) {
+    E[] output = (E[])new Object[data.length * 2];
+    int newArrIdx = 0;
+
+    for (int i = start; i < data.length; ++i) {
+      output[newArrIdx] = data[i];
+      ++newArrIdx;
+    }
+
+    //Would never get run if start > end
+    for (int i = end; i < start; ++i) {
+      output[newArrIdx] = data[i];
+      ++newArrIdx;
+    }
+
+    return output;
+  }
 }
