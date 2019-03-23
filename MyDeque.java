@@ -73,7 +73,7 @@ public class MyDeque<E> {
   }
 
   @SuppressWarnings("unchecked")
-  private E[] resize(E[] data) {
+  private void resize() {
     E[] output = (E[])new Object[data.length * 2];
     int newArrIdx = 0;
 
@@ -88,6 +88,24 @@ public class MyDeque<E> {
       ++newArrIdx;
     }
 
-    return output;
+    data = output;
+  }
+
+  public void addFirst(E element) {
+    if (start == 0) {
+      data[data.length - 1] = element;
+      start = data.length - 1;
+    }
+
+    else if (start - 1 == end) {
+      resize();
+      data[data.length - 1] = element;
+      start = data.length - 1;
+    }
+
+    else {
+      data[start - 1] = element;
+      --start;
+    }
   }
 }
