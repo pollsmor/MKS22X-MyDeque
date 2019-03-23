@@ -1,3 +1,5 @@
+import java.util.NoSuchElementException;
+
 public class MyDeque<E> {
   private E[] data;
   private int size, start, end;
@@ -38,11 +40,35 @@ public class MyDeque<E> {
     return output;
   }
 
+  //Includes null and visibly separates two sides of array
+  public String toStringDebug() {
+    String output = "{";
+
+    for (int i = start; i < data.length; ++i)
+      output += data[i] + " ";
+
+    output += "} / {";
+
+    //Would never get run if start > end
+    for (int i = end; i < start; ++i)
+      output += data[i] + " ";
+
+    output += "}";
+
+    return output;
+  }
+
   public E getFirst() {
+    if (size() == 0)
+      throw new NoSuchElementException("You can't get something from nothing.");
+
     return data[start];
   }
 
   public E getLast() {
+    if (size() == 0)
+      throw new NoSuchElementException("You can't get something from nothing.");
+
     return data[end];
   }
 
