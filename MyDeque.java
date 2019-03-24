@@ -77,12 +77,12 @@ public class MyDeque<E> {
     }
 
     //Would never get run if start > end
-    for (int i = end; i < start; ++i) {
+    for (int i = 0; i < start; ++i) {
       output[newArrIdx] = data[i];
       ++newArrIdx;
     }
 
-    end = newArrIdx;
+    end = newArrIdx - 1;
     data = output;
   }
 
@@ -92,18 +92,15 @@ public class MyDeque<E> {
 
     ++size;
 
-    if (start == 0) {
-      if (end != data.length - 1) {
-        data[data.length - 1] = element;
-        start = data.length - 1;
-        end = data.length - 1;
-      }
+    if (data[0] == null) {
+      data[0] = element;
+      start = 0;
+      end = 0;
+    }
 
-      else {
-        resize();
-        data[data.length - 1] = element;
-        start = data.length - 1;
-      }
+    else if (start == 0 && data[0] != null) {
+      data[data.length - 1] = element;
+      start = data.length -1;
     }
 
     else if (start - 1 == end) {
@@ -124,12 +121,18 @@ public class MyDeque<E> {
 
     ++size;
 
-    if (end == data.length - 1) {
-        data[0] = element;
-        end = 0;
+    if (data[0] == null) {
+      data[0] = element;
+      start = 0;
+      end = 0;
     }
 
-    else if (end + 1 == start) {
+    else if (end == 0 && data[0] != null) {
+      data[1] = element;
+      end = 1;
+    }
+
+    else if (end + 1 == start || end + 1 == data.length) {
       resize();
       data[end + 1] = element;
       ++end;
@@ -148,7 +151,6 @@ public class MyDeque<E> {
     --size;
 
     E temp = data[start];
-    data[start] = null;
     data[start] = null;
     ++start;
     if (start == data.length)
