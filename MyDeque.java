@@ -15,13 +15,7 @@ public class MyDeque<E> {
   }
 
   public int size() {
-    if (start == end) //empty list
-      return 0;
-
-    if (start < end) //normal list
-      return end - start + 1;
-
-    return start + end; //double ended list
+    return size;
   }
 
   public String toString() {
@@ -32,7 +26,7 @@ public class MyDeque<E> {
       output += data[i] + " ";
 
     //Would never get run if start > end
-    for (int i = end; i < start && data[i] != null; ++i)
+    for (int i = 0; i < start && data[i] != null; ++i)
       output += data[i] + " ";
 
     output += "}";
@@ -45,13 +39,13 @@ public class MyDeque<E> {
     String output = "{";
 
     for (int i = start; i < data.length; ++i)
-      output += data[i] + " ";
+      output += data[i] + "(" + i + ")" + " ";
 
     output += "} / {";
 
     //Would never get run if start > end
-    for (int i = end; i < start; ++i)
-      output += data[i] + " ";
+    for (int i = 0; i < start; ++i)
+      output += data[i] + "(" + i + ")" + " ";
 
     output += "}";
 
@@ -88,13 +82,28 @@ public class MyDeque<E> {
       ++newArrIdx;
     }
 
+    end = newArrIdx;
     data = output;
   }
 
   public void addFirst(E element) {
+    if (element == null)
+      throw new NullPointerException("Not allowed to add null!");
+
+    ++size;
+
     if (start == 0) {
-      data[data.length - 1] = element;
-      start = data.length - 1;
+      if (end != data.length - 1) {
+        data[data.length - 1] = element;
+        start = data.length - 1;
+        end = data.length - 1;
+      }
+
+      else {
+        resize();
+        data[data.length - 1] = element;
+        start = data.length - 1;
+      }
     }
 
     else if (start - 1 == end) {
@@ -107,5 +116,40 @@ public class MyDeque<E> {
       data[start - 1] = element;
       --start;
     }
+  }
+
+  public void addLast(E element) {
+    if (element == null)
+      throw new NullPointerException("Not allowed to add null!");
+
+    ++size;
+
+    if (end == data.length - 1) {
+        data[0] = element;
+        end = 0;
+    }
+
+    else if (end + 1 == start) {
+      resize();
+      data[end + 1] = element;
+      ++end;
+    }
+
+    else {
+      data[end + 1] = element;
+      ++end;
+    }
+  }
+
+  public void removeLast() {
+    if (size() == 0)
+      throw new NoSuchElementException("You can't get something from nothing.");
+
+    --size;
+
+    data[end] = null;
+    --end;
+    if (end == -1)
+      end = data.length - 1;
   }
 }
