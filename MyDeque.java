@@ -2,7 +2,7 @@ import java.util.NoSuchElementException;
 
 public class MyDeque<E> {
   private E[] data;
-  private int size, start, end;
+  private int size, start, end; //initialize all to 0
 
   @SuppressWarnings("unchecked")
   public MyDeque() {
@@ -25,7 +25,7 @@ public class MyDeque<E> {
     for (int i = start; i < data.length && data[i] != null; ++i)
       output += data[i] + " ";
 
-    //Would never get run if start > end
+    //Would never get run if end > start (normal list, start = 0)
     for (int i = 0; i < start && data[i] != null; ++i)
       output += data[i] + " ";
 
@@ -43,7 +43,7 @@ public class MyDeque<E> {
 
     output += "} / {";
 
-    //Would never get run if start > end
+    //Would never get run if end > start (normal list, start = 0)
     for (int i = 0; i < start; ++i)
       output += data[i] + "(" + i + ")" + " ";
 
@@ -76,13 +76,13 @@ public class MyDeque<E> {
       ++newArrIdx;
     }
 
-    //Would never get run if start > end
+    //Would never get run if end > start (normal list, start = 0)
     for (int i = 0; i < start; ++i) {
       output[newArrIdx] = data[i];
       ++newArrIdx;
     }
 
-    end = newArrIdx - 1;
+    end = newArrIdx - 1; //-1 because the for loop adds an extra one
     data = output;
   }
 
@@ -92,23 +92,27 @@ public class MyDeque<E> {
 
     ++size;
 
+    //Case: empty list
     if (data[0] == null) {
       data[0] = element;
       start = 0;
       end = 0;
     }
 
+    //Case: an element is at 0 but start is still at 0, start has to move to end of list
     else if (start == 0 && data[0] != null) {
       data[data.length - 1] = element;
       start = data.length -1;
     }
 
+    //Case: list is full, need to resize
     else if (start - 1 == end) {
       resize();
       data[data.length - 1] = element;
       start = data.length - 1;
     }
 
+    //Normal case, should happen most of the time
     else {
       data[start - 1] = element;
       --start;
@@ -121,23 +125,27 @@ public class MyDeque<E> {
 
     ++size;
 
+    //Case: empty list
     if (data[0] == null) {
       data[0] = element;
       start = 0;
       end = 0;
     }
 
+    //Case: an element is at 0 but end is still at 0, end has to move in front of 0
     else if (end == 0 && data[0] != null) {
       data[1] = element;
       end = 1;
     }
 
+    //Case: list is full, need to resize
     else if (end + 1 == start || end + 1 == data.length) {
       resize();
       data[end + 1] = element;
       ++end;
     }
 
+    //Normal case, should happen most of the time
     else {
       data[end + 1] = element;
       ++end;
@@ -150,10 +158,10 @@ public class MyDeque<E> {
 
     --size;
 
-    E temp = data[start];
+    E temp = data[start]; //need to return this
     data[start] = null;
     ++start;
-    if (start == data.length)
+    if (start == data.length) //go to other side not data.length (out of range)
       start = 0;
 
     return temp;
@@ -165,10 +173,10 @@ public class MyDeque<E> {
 
     --size;
 
-    E temp = data[end];
+    E temp = data[end]; //need to return this
     data[end] = null;
     --end;
-    if (end == -1)
+    if (end == -1) //go to other side not -1
       end = data.length - 1;
 
     return temp;
