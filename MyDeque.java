@@ -141,15 +141,34 @@ public class MyDeque<E> {
     }
   }
 
-  public void removeLast() {
+  public E removeFirst() {
     if (size() == 0)
-      throw new NoSuchElementException("You can't get something from nothing.");
+      throw new NoSuchElementException("You can't remove something from nothing.");
 
     --size;
 
+    E temp = data[start];
+    data[start] = null;
+    data[start] = null;
+    ++start;
+    if (start == data.length)
+      start = 0;
+
+    return temp;
+  }
+
+  public E removeLast() {
+    if (size() == 0)
+      throw new NoSuchElementException("You can't remove something from nothing.");
+
+    --size;
+
+    E temp = data[end];
     data[end] = null;
     --end;
     if (end == -1)
       end = data.length - 1;
+
+    return temp;
   }
 }
