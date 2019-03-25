@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Calculator {
   public static double eval(String s) {
     String[] elements = s.split(" ");
@@ -16,7 +18,10 @@ public class Calculator {
         operators[opsIdx] = elements[i].charAt(0);
       }
     }
-
+    
+    System.out.println(Arrays.toString(elements));
+    System.out.println(Arrays.toString(operators));
+    System.out.println(Arrays.toString(nums));
     return 1.0;
   }
 }
