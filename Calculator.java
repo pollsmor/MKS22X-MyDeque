@@ -14,43 +14,40 @@ public class Calculator {
       catch (NumberFormatException e) {
         double result = 0.0;
         String operation = calc.removeLast();
-        System.out.println(operation);
         if (operation.equals("+")) {
           double num2 = Double.parseDouble(calc.removeLast());
           double num1 = Double.parseDouble(calc.removeLast());
-          result = num2 + num1;
+          result = num1 + num2;
         }
 
         else if (operation.equals("-")) {
           double num2 = Double.parseDouble(calc.removeLast());
           double num1 = Double.parseDouble(calc.removeLast());
-          result = num2 - num1;
+          result = num1 - num2;
         }
 
         else if (operation.equals("*")) {
           double num2 = Double.parseDouble(calc.removeLast());
           double num1 = Double.parseDouble(calc.removeLast());
-          result = num2 * num1;
+          result = num1 * num2;
         }
 
         else if (operation.equals("/")) {
           double num2 = Double.parseDouble(calc.removeLast());
           double num1 = Double.parseDouble(calc.removeLast());
-          result = num2 / num1;
+          result = num1 / num2;
         }
 
         else if (operation.equals("%")) {
           double num2 = Double.parseDouble(calc.removeLast());
           double num1 = Double.parseDouble(calc.removeLast());
-          result = num2 % num1;
+          result = num1 % num2;
         }
 
-        System.out.println(result);
         calc.addLast(result + "");
       }
     }
 
-    //System.out.println(Arrays.toString(elements));
     return Double.parseDouble(calc.getLast());
   }
 }
