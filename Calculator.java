@@ -3,25 +3,54 @@ import java.util.Arrays;
 public class Calculator {
   public static double eval(String s) {
     String[] elements = s.split(" ");
-    char[] operators = new char[elements.length / 2]; //e.g. 9 elements, 4 are operators
-    double[] nums = new double[elements.length - operators.length]; // 9 - 4 = 5;
-    int opsIdx = 0;
-    int numsIdx = 0;
-
+    MyDeque<String> calc = new MyDeque<String>();
     for (int i = 0; i < elements.length; ++i) {
+      calc.addLast(elements[i]);
+
       try {
-        nums[numsIdx] = Double.parseDouble(elements[i]);
-        ++numsIdx;
+        Double.parseDouble(calc.getLast());
       }
 
       catch (NumberFormatException e) {
-        operators[opsIdx] = elements[i].charAt(0);
+        double result = 0.0;
+        String operation = calc.removeLast();
+        System.out.println(operation);
+        if (operation.equals("+")) {
+          double num2 = Double.parseDouble(calc.removeLast());
+          double num1 = Double.parseDouble(calc.removeLast());
+          result = num2 + num1;
+        }
+
+        else if (operation.equals("-")) {
+          double num2 = Double.parseDouble(calc.removeLast());
+          double num1 = Double.parseDouble(calc.removeLast());
+          result = num2 - num1;
+        }
+
+        else if (operation.equals("*")) {
+          double num2 = Double.parseDouble(calc.removeLast());
+          double num1 = Double.parseDouble(calc.removeLast());
+          result = num2 * num1;
+        }
+
+        else if (operation.equals("/")) {
+          double num2 = Double.parseDouble(calc.removeLast());
+          double num1 = Double.parseDouble(calc.removeLast());
+          result = num2 / num1;
+        }
+
+        else if (operation.equals("%")) {
+          double num2 = Double.parseDouble(calc.removeLast());
+          double num1 = Double.parseDouble(calc.removeLast());
+          result = num2 % num1;
+        }
+
+        System.out.println(result);
+        calc.addLast(result + "");
       }
     }
-    
-    System.out.println(Arrays.toString(elements));
-    System.out.println(Arrays.toString(operators));
-    System.out.println(Arrays.toString(nums));
-    return 1.0;
+
+    //System.out.println(Arrays.toString(elements));
+    return Double.parseDouble(calc.getLast());
   }
 }
